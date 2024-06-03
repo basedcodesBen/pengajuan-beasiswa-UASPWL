@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +15,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('pages/login/login-page');
 });
+
+Route::get('/admin-page', function () {
+    return view('pages/admin/index-admin');
+});
+
+Route::get('/admin/welcome', [AdminController::class, 'welcome'])->name('admin.welcome');
+Route::get('/admin/proposals', [AdminController::class, 'proposals'])->name('admin.proposals');
+Route::get('/admin/students', [AdminController::class, 'students'])->name('admin.students');
+Route::get('/admin/settings', [AdminController::class, 'settings'])->name('admin.settings');
