@@ -21,6 +21,13 @@
                         <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                             Log In
                         </h1>
+                        <!-- Display Error Messages -->
+                        @if ($errors->any())
+                            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                                <strong class="font-bold">Error!</strong>
+                                <span class="block sm:inline">{{ $errors->first('login') }}</span>
+                            </div>
+                        @endif
                         <form class="space-y-4 md:space-y-6" method="POST" action="{{ route('login') }}">
                             @csrf
                             <div>

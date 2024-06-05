@@ -28,7 +28,7 @@ class AuthController extends Controller
             // Add more role-based redirects if necessary
         }
 
-        return redirect()->back()->withErrors(['email' => 'Invalid credentials or inactive account']);
+        return redirect()->back()->withErrors(['login' => 'Invalid credentials or inactive account']);
     }
 
     public function logout()
