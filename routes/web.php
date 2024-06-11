@@ -45,7 +45,6 @@ Route::get('/admin/welcome', [AdminController::class, 'welcome'])->name('admin.d
 Route::get('/admin/proposals', [AdminController::class, 'proposals'])->name('admin.proposals');
 Route::get('/admin/students', [AdminController::class, 'students'])->name('admin.students');
 Route::get('/admin/settings', [AdminController::class, 'settings'])->name('admin.settings');
-=======
 
 // Role-based dashboard routes
 
