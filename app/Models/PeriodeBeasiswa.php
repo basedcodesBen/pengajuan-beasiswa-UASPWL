@@ -8,4 +8,20 @@ use Illuminate\Database\Eloquent\Model;
 class PeriodeBeasiswa extends Model
 {
     use HasFactory;
+
+    protected $table = 'periode_beasiswa';
+
+    protected $fillable = [
+        'id_periode',
+        'id_beasiswa',
+        'jenis_beasiswa',
+        'periode'
+    ];
+
+    protected $primaryKey = 'id_beasiswa';
+
+    public function idBeasiswa()
+    {
+        return $this->belongsTo(Beasiswa::class);
+    }
 }
