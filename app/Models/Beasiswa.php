@@ -9,5 +9,12 @@ class Beasiswa extends Model
 {
     use HasFactory;
 
-    
+    protected $table = 'beasiswa';
+
+    protected $fillable = [
+        'id_beasiswa',
+        'jenis_beasiswa'
+    ];
+
+    protected $primaryKey = 'id_beasiswa';
 }
