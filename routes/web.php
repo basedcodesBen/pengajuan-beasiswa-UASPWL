@@ -41,18 +41,17 @@ Route::middleware(['auth', 'role:user'])->get('/user/dashboard', function () {
 //     return view('pages/admin/index-admin');
 // });
 
-Route::get('/admin/welcome', [AdminController::class, 'welcome'])->name('admin.dashboard');
-Route::get('/admin/proposals', [AdminController::class, 'proposals'])->name('admin.proposals');
-Route::get('/admin/students', [AdminController::class, 'students'])->name('admin.students');
-Route::get('/admin/settings', [AdminController::class, 'settings'])->name('admin.settings');
-
 // Role-based dashboard routes
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/welcome', [AdminController::class, 'welcome'])->name('admin.dashboard');
     Route::get('/admin/proposals', [AdminController::class, 'proposals'])->name('admin.proposals');
-    Route::get('/admin/students', [AdminController::class, 'students'])->name('admin.students');
-    Route::get('/admin/settings', [AdminController::class, 'settings'])->name('admin.settings');
+    Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users');
+    Route::get('/admin/users/create', [AdminController::class, 'create'])->name('admin.users.create');
+    Route::post('/admin/users', [AdminController::class, 'store'])->name('admin.users.store');
+    Route::get('/admin/users/{user}/edit', [AdminController::class, 'edit'])->name('admin.users.edit');
+    Route::put('/admin/users/{user}', [AdminController::class, 'update'])->name('admin.users.update');
+    Route::delete('/admin/users/{user}', [AdminController::class, 'destroy'])->name('admin.users.destroy');
 });
 
 Route::middleware(['auth', 'role:admin'])->group(function (){

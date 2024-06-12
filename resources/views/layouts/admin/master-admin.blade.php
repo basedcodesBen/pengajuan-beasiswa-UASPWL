@@ -21,5 +21,7 @@
 
       {{-- Scripts --}}
       <script src="{{ asset('https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js') }}"></script>
+      <!-- Flowbite -->
+    <script src="https://unpkg.com/flowbite@1.5.0/dist/flowbite.js"></script>
 </body>
 </html>
