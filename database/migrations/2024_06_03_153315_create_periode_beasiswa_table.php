@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id('id_periode');
             $table->unsignedBigInteger('id_beasiswa');
             $table->foreign('id_beasiswa')->references('id_beasiswa')->on('beasiswa');
-            $table->string('jenis_beasiswa');
-            $table->date('periode');
+            $table->year('tahun_ajaran');
+            $table->string('triwulan');
             $table->date('start_date');
             $table->date('end_date');
             $table->timestamps();

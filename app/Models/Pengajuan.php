@@ -10,37 +10,23 @@ class Pengajuan extends Model
     use HasFactory;
 
     protected $table = 'pengajuan';
+    protected $primaryKey = ['id_user', 'id_beasiswa', 'id_periode'];
+    public $incrementing = false;
+    protected $keyType = 'array';
 
     protected $fillable = [
-        'id_pengajuan',
         'id_user',
         'id_beasiswa',
         'id_periode',
-        'nrp',
-        'nama',
         'ipk',
-        'transkrip',
-        'surat_rekom',
-        'surat_pernyataan',
-        'bukti_keaktifan',
-        'dokum_pendukung',
-        'status_approve',
+        'poin_portofolio',
+        'status_1',
+        'status_2',
     ];
 
-    protected $primaryKey = 'id_pengajuan';
-
-    public function idUser()
+    public function pengajuanDocs()
     {
-        return $this->belongsTo(User::class);
-    }
-
-    public function idBeasiswa()
-    {
-        return $this->belongsTo(Beasiswa::class);
-    }
-
-    public function idPeriode()
-    {
-        return $this->belongsTo(PeriodeBeasiswa::class);
+        return $this->belongsToMany(PengajuanDoc::class, 'pengajuan_pengajuan_doc', 'id_user', 'pengajuan_doc_id')
+            ->withPivot('file_path', 'id_beasiswa', 'id_periode');
     }
 }
