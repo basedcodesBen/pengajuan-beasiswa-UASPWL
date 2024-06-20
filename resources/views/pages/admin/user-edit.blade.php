@@ -33,9 +33,10 @@
             <div class="mb-4">
                 <label for="role" class="block text-gray-700">Role:</label>
                 <select name="role" id="role" class="w-full p-2 border border-gray-300 rounded" required>
-                    <option value="Admin" {{ $user->role == 'Admin' ? 'selected' : '' }}>Admin</option>
-                    <option value="Mahasiswa" {{ $user->role == 'Mahasiswa' ? 'selected' : '' }}>Mahasiswa</option>
-                    <option value="Dosen" {{ $user->role == 'Dosen' ? 'selected' : '' }}>Dosen</option>
+                    <option value="admin" {{ $user->role == 'admin' ? 'selected' : '' }}>Admin</option>
+                    <option value="prodi" {{ $user->role == 'prodi' ? 'selected' : '' }}>Prodi</option>
+                    <option value="fakultas" {{ $user->role == 'fakultas' ? 'selected' : '' }}>Fakultas</option>
+                    <option value="mahasiswa" {{ $user->role == 'mahasiswa' ? 'selected' : '' }}>Mahasiswa</option>
                 </select>
             </div>
             <div class="mb-4">

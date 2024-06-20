@@ -32,9 +32,10 @@
             <div class="mb-4">
                 <label for="role" class="block text-gray-700">Role:</label>
                 <select name="role" id="role" class="w-full p-2 border border-gray-300 rounded" required>
-                    <option value="Admin">Admin</option>
-                    <option value="Mahasiswa">Mahasiswa</option>
-                    <option value="Dosen">Dosen</option>
+                    <option value="admin">Admin</option>
+                    <option value="prodi">Prodi</option>
+                    <option value="fakultas">Fakultas</option>
+                    <option value="mahasiswa">Mahasiswa</option>
                 </select>
             </div>
             <div class="mb-4">

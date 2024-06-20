@@ -51,7 +51,7 @@ class AdminController extends Controller
 
     public function edit(User $user)
     {
-        return view('pages.admin.user-create', compact('user'));
+        return view('pages.admin.user-edit', compact('user'));
     }
 
     public function update(Request $request, User $user)

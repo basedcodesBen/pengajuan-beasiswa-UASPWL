@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Pengajuan;
 use App\Models\PengajuanDoc;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PengajuanController extends Controller
 {
@@ -87,6 +88,42 @@ class PengajuanController extends Controller
         $pengajuan->delete();
 
         return redirect()->route('pengajuan.index')->with('success', 'Pengajuan deleted successfully.');
+    }
+
+    public function approve($id)
+    {
+        $pengajuan = Pengajuan::findOrFail($id);
+
+        $user = Auth::user();
+        if ($user->role == 'Prodi') {
+            $pengajuan->status_1 = true;
+            $pengajuan->save();
+            return redirect()->route('pengajuan.index')->with('success', 'Submission approved by Prodi.');
+        } elseif ($user->role == 'Fakultas' && $pengajuan->status_1) {
+            $pengajuan->status_2 = true;
+            $pengajuan->save();
+            return redirect()->route('pengajuan.index')->with('success', 'Submission approved by Fakultas.');
+        }
+
+        return redirect()->route('pengajuan.index')->with('error', 'You are not authorized to approve this submission.');
+    }
+
+    public function reject($id)
+    {
+        $pengajuan = Pengajuan::findOrFail($id);
+
+        $user = Auth::user();
+        if ($user->role == 'Prodi') {
+            $pengajuan->status_1 = false;
+            $pengajuan->save();
+            return redirect()->route('pengajuan.index')->with('success', 'Submission rejected by Prodi.');
+        } elseif ($user->role == 'Fakultas' && $pengajuan->status_1) {
+            $pengajuan->status_2 = false;
+            $pengajuan->save();
+            return redirect()->route('pengajuan.index')->with('success', 'Submission rejected by Fakultas.');
+        }
+
+        return redirect()->route('pengajuan.index')->with('error', 'You are not authorized to reject this submission.');
     }
 
 }
