@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProdiController;
+use App\Http\Controllers\PengajuanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,21 +35,15 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
 Route::middleware(['auth', 'role:prodi'])->group(function (){
     Route::get('/prodi/welcome', [ProdiController::class, 'welcome'])->name('prodi.dashboard');
+    Route::post('pengajuan/{id}/approve', [PengajuanController::class, 'approve'])->name('pengajuan.approve');
+    Route::post('pengajuan/{id}/reject', [PengajuanController::class, 'reject'])->name('pengajuan.reject');
+});
+
+Route::middleware(['auth', 'role:fakultas'])->group(function(){
+    Route::post('pengajuan/{id}/approve', [PengajuanController::class, 'approve'])->name('pengajuan.approve');
+    Route::post('pengajuan/{id}/reject', [PengajuanController::class, 'reject'])->name('pengajuan.reject');
 });
 
 Route::middleware(['auth', 'role:user'])->get('/user/dashboard', function () {
     return view('user.dashboard');
 })->name('user.dashboard');
-
-
-// Route::get('/', function () {
-//     return view('pages/login/login-page');
-// });
-
-// Route::get('/', function () {
-//     return view('pages/login/login-page');
-// });
-
-// Route::get('/admin-page', function () {
-//     return view('pages/admin/index-admin');
-// });

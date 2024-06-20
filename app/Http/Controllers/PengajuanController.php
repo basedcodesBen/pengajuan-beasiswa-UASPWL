@@ -12,6 +12,15 @@ class PengajuanController extends Controller
     public function index()
     {
         $pengajuans = Pengajuan::with('pengajuanDocs')->get();
+
+        // Separate submissions for prodi and fakultas
+        $user = Auth::user();
+        if ($user->role == 'Prodi') {
+            $pengajuans = Pengajuan::where('status_1', false)->get();
+        } elseif ($user->role == 'Fakultas') {
+            $pengajuans = Pengajuan::where('status_1', true)->where('status_2', false)->get();
+        }
+
         return view('pengajuan.index', compact('pengajuans'));
     }
 
