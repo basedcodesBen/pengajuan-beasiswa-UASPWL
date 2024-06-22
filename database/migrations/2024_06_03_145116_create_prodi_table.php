@@ -14,7 +14,14 @@ return new class extends Migration
         Schema::create('prodi', function (Blueprint $table) {
             $table->string('id_prodi')->primary();
             $table->string('nama_prodi');
+            $table->string('id_fakultas'); // Foreign key column
             $table->timestamps();
+
+            // Define the foreign key constraint
+            $table->foreign('id_fakultas')
+                  ->references('id_fakultas')
+                  ->on('fakultas')
+                  ->onDelete('cascade'); // Optional: specify action on delete
         });
     }
 
@@ -26,3 +33,4 @@ return new class extends Migration
         Schema::dropIfExists('prodi');
     }
 };
+

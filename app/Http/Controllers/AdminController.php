@@ -13,16 +13,12 @@ class AdminController extends Controller
         return view('pages.admin.index-admin');
     }
 
-    public function proposals()
-    {
-        // Logic to fetch and display proposals
-    }
-
     public function users()
     {
         $users = User::all(); // Fetch all users from the User table
         return view('pages.admin.users', compact('users'));
     }
+    
     public function create()
     {
         return view('pages.admin.user-create');
