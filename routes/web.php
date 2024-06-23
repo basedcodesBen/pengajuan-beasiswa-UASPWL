@@ -21,6 +21,19 @@ use App\Http\Controllers\FakultasController;
 Route::get('/', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+// Route::get('/prodi/dashboard', [ProdiController::class, 'dashboard'])->name('prodi.dashboard');
+
+Route::middleware(['auth', 'role:fakultas'])->group(function(){
+    Route::post('pengajuan/{id}/approve', [PengajuanController::class, 'approve'])->name('pengajuan.approve');
+    Route::post('pengajuan/{id}/reject', [PengajuanController::class, 'reject'])->name('pengajuan.reject');
+});
+
+Route::middleware(['auth', 'role:prodi'])->group(function (){
+    // Route::resource('prodi', ProdiController::class);
+    Route::get('/prodi/dashboard', [ProdiController::class, 'dashboard'])->name('prodi.dashboard');
+    Route::post('pengajuan/{id}/approve', [PengajuanController::class, 'approve'])->name('pengajuan.approve');
+    Route::post('pengajuan/{id}/reject', [PengajuanController::class, 'reject'])->name('pengajuan.reject');
+});
 
 // Role-based dashboard routes
 Route::middleware(['auth', 'role:admin'])->group(function () {
@@ -35,20 +48,13 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::delete('/admin/users/{user}', [AdminController::class, 'destroy'])->name('admin.users.destroy');
 
     // CRUD for Fakultas
-    Route::resource('fakultas', 'App\Http\Controllers\FakultasController');
+    Route::resource('fakultas', FakultasController::class);
+
+    // CRUD for Prodi
+    Route::resource('prodi', ProdiController::class);
 });
 
-Route::middleware(['auth', 'role:prodi'])->group(function (){
-    Route::get('/prodi/welcome', [ProdiController::class, 'welcome'])->name('prodi.dashboard');
-    Route::post('pengajuan/{id}/approve', [PengajuanController::class, 'approve'])->name('pengajuan.approve');
-    Route::post('pengajuan/{id}/reject', [PengajuanController::class, 'reject'])->name('pengajuan.reject');
-});
 
-Route::middleware(['auth', 'role:fakultas'])->group(function(){
-    Route::post('pengajuan/{id}/approve', [PengajuanController::class, 'approve'])->name('pengajuan.approve');
-    Route::post('pengajuan/{id}/reject', [PengajuanController::class, 'reject'])->name('pengajuan.reject');
-});
-
-Route::middleware(['auth', 'role:user'])->get('/user/dashboard', function () {
-    return view('user.dashboard');
+Route::middleware(['auth', 'role:mahasiswa'])->get('/user/dashboard', function () {
+    return view('user.mahasiswa');
 })->name('user.dashboard');

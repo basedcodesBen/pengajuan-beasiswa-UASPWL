@@ -10,12 +10,12 @@ class FakultasController extends Controller
     public function index()
     {
         $fakultas = Fakultas::all();
-        return view('pages.admin.fakultas', compact('fakultas'));
+        return view('pages.admin.fakultas.fakultas', compact('fakultas'));
     }
 
     public function create()
     {
-        return view('pages.admin.fakultas-create');
+        return view('pages.admin.fakultas.fakultas-create');
     }
 
     public function store(Request $request)
@@ -32,7 +32,7 @@ class FakultasController extends Controller
     public function edit($id_fakultas)
     {
         $fakultas = Fakultas::findOrFail($id_fakultas);
-        return view('pages.admin.fakultas-edit', compact('fakultas'));
+        return view('pages.admin.fakultas.fakultas-edit', compact('fakultas'));
     }
 
     public function update(Request $request, $id_fakultas)

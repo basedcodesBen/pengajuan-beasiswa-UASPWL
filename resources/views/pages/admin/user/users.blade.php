@@ -22,7 +22,7 @@
             </div>
         @endif
 
-        <a href="{{ route('admin.users.create') }}" class="mb-4 inline-block px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">Add New User</a>
+        <a href="{{ route('admin.users.create') }}" class="mb-4 inline-block px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">Tambah User</a>
 
         <table class="min-w-full bg-white">
             <thead>
@@ -43,11 +43,11 @@
                         <td class="py-2 px-4">{{ $user->role }}</td>
                         <td class="py-2 px-4">
                             <a href="{{ route('admin.users.edit', $user) }}" class="px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-600">Edit</a>
-                            <form action="{{ route('admin.users.destroy', $user) }}" method="POST" class="inline-block">
+                            <form action="{{ route('admin.users.destroy', $user) }}" method="POST" class="inline-block" onsubmit="return confirm('Apakah anda yakin ingin menghapus data pengguna ini?');">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600">Delete</button>
-                            </form>
+                                <button type="submit" class="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600">Hapus</button>
+                            </form> 
                         </td>
                     </tr>
                 @endforeach

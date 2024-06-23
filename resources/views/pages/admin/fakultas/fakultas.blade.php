@@ -11,7 +11,7 @@
             </div>
         @endif
 
-        <a href="{{ route('fakultas.create') }}" class="mb-4 inline-block px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">Add New Fakultas</a>
+        <a href="{{ route('fakultas.create') }}" class="mb-4 inline-block px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">Tambah Fakultas</a>
 
         <table class="min-w-full bg-white">
             <thead>
@@ -27,12 +27,12 @@
                         <td class="py-2 px-4">{{ $item->id_fakultas }}</td>
                         <td class="py-2 px-4">{{ $item->nama_fakultas }}</td>
                         <td class="py-2 px-4">
-                            <a href="{{ route('fakultas.edit', $item) }}" class="px-2 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600">Edit</a>
-                            <form action="{{ route('fakultas.destroy', $item) }}" method="POST" class="inline-block">
+                            <a href="{{ route('fakultas.edit', $item->id_fakultas) }}" class="px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-600">Edit</a>
+                            <form action="{{ route('fakultas.destroy', $item->id_fakultas) }}" method="POST" class="inline-block" onsubmit="return confirm('Apakah anda yakin ingin menghapus data Fakultas ini?');">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600">Delete</button>
-                            </form>
+                            </form>                            
                         </td>
                     </tr>
                 @endforeach

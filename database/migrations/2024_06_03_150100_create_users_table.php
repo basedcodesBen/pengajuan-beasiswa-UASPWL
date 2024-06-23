@@ -19,8 +19,14 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('role')->default('user');
+            $table->string('id_prodi')->nullable();
+            $table->string('id_fakultas')->nullable();
             $table->rememberToken();
             $table->timestamps();
+
+            // Foreign key constraints
+            $table->foreign('id_prodi')->references('id_prodi')->on('prodi')->onDelete('set null');
+            $table->foreign('id_fakultas')->references('id_fakultas')->on('fakultas')->onDelete('set null');
         });
     }
 
@@ -29,6 +35,12 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropForeign(['id_prodi']);
+            $table->dropForeign(['id_fakultas']);
+        });
+
         Schema::dropIfExists('users');
     }
 };
+

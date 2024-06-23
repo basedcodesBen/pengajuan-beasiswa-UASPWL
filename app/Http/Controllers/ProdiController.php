@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Prodi;
+use App\Models\Fakultas;
 use Illuminate\Http\Request;
 
 class ProdiController extends Controller
@@ -9,9 +11,15 @@ class ProdiController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function welcome()
+    public function dashboard()
     {
         return view('pages.prodi.index-prodi');
+    }
+
+    public function index()
+    {
+        $prodi = Prodi::with('fakultas')->get();
+        return view('pages.admin.prodi.prodi', compact('prodi'));
     }
 
     /**
@@ -19,7 +27,8 @@ class ProdiController extends Controller
      */
     public function create()
     {
-        //
+        $fakultas = Fakultas::all();
+        return view('pages.admin.prodi.prodi-create', compact('fakultas'));
     }
 
     /**
@@ -27,38 +36,48 @@ class ProdiController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $request->validate([
+            'id_prodi' => 'required|string|max:255|unique:prodi,id_prodi',
+            'nama_prodi' => 'required|string|max:255',
+            'id_fakultas' => 'required|string|exists:fakultas,id_fakultas',
+        ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
+        Prodi::create($request->all());
+        return redirect()->route('prodi.index')->with('success', 'Prodi created successfully.');
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id_prodi)
     {
-        //
+        $prodi = Prodi::findOrFail($id_prodi);
+        $fakultas = Fakultas::all();
+        return view('pages.admin.prodi.prodi-edit', compact('prodi', 'fakultas'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id_prodi)
     {
-        //
+        $request->validate([
+            'nama_prodi' => 'required|string|max:255',
+            'id_fakultas' => 'required|string|exists:fakultas,id_fakultas',
+        ]);
+
+        $prodi = Prodi::findOrFail($id_prodi);
+        $prodi->update($request->all());
+        return redirect()->route('prodi.index')->with('success', 'Prodi berhasil di update.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id_prodi)
     {
-        //
+        $prodi = Prodi::findOrFail($id_prodi);
+        $prodi->delete();
+        return redirect()->route('prodi.index')->with('success', 'Prodi berhasil dihapus.');
     }
 }
