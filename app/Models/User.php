@@ -24,8 +24,20 @@ class User extends Authenticatable
         'nrp',
         'email',
         'password',
-        'role'
+        'role',
+        'id_prodi', 
+        'id_fakultas',
     ];
+
+    public function prodi()
+    {
+        return $this->belongsTo(Prodi::class, 'id_prodi', 'id_prodi');
+    }
+
+    public function fakultas()
+    {
+        return $this->belongsTo(Fakultas::class, 'id_fakultas', 'id_fakultas');
+    }
 
     /**
      * The attributes that should be hidden for serialization.
