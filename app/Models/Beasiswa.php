@@ -17,4 +17,9 @@ class Beasiswa extends Model
     ];
 
     protected $primaryKey = 'id_beasiswa';
+
+    public function pengajuans()
+    {
+        return $this->hasMany(Pengajuan::class, 'id_beasiswa');
+    }
 }

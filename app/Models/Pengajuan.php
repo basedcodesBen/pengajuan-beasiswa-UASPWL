@@ -31,4 +31,14 @@ class Pengajuan extends Model
     {
         return $this->belongsTo(User::class, 'id_user');
     }
+
+    public function beasiswa()
+    {
+        return $this->belongsTo(Beasiswa::class, 'id_beasiswa');
+    }
+
+    public function periode()
+    {
+        return $this->belongsTo(PeriodeBeasiswa::class, 'id_periode');
+    }
 }
