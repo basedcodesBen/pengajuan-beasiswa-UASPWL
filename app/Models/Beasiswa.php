@@ -20,4 +20,10 @@ class Beasiswa extends Model
         return $this->belongsTo(PeriodeBeasiswa::class, 'id_periode');
     }
 
+    protected $primaryKey = 'id_beasiswa';
+
+    public function pengajuans()
+    {
+        return $this->hasMany(Pengajuan::class, 'id_beasiswa');
+    }
 }

@@ -42,4 +42,19 @@ class Pengajuan extends Model
         return $this->belongsToMany(PengajuanDoc::class, 'pengajuan_pengajuan_doc', 'id_user', 'pengajuan_doc_id')
             ->withPivot('file_path', 'id_beasiswa', 'id_periode');
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id_user');
+    }
+
+    public function beasiswa()
+    {
+        return $this->belongsTo(Beasiswa::class, 'id_beasiswa');
+    }
+
+    public function periode()
+    {
+        return $this->belongsTo(PeriodeBeasiswa::class, 'id_periode');
+    }
 }

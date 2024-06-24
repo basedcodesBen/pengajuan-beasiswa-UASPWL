@@ -7,6 +7,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProdiController;
 use App\Http\Controllers\PengajuanController;
 use App\Http\Controllers\FakultasController;
+use App\Http\Controllers\PengajuanProdiController;
+use App\Http\Controllers\PengajuanFakultasController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,8 +27,9 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 // Route::get('/prodi/dashboard', [ProdiController::class, 'dashboard'])->name('prodi.dashboard');
 
 Route::middleware(['auth', 'role:fakultas'])->group(function(){
-    Route::post('pengajuan/{id}/approve', [PengajuanController::class, 'approve'])->name('pengajuan.approve');
-    Route::post('pengajuan/{id}/reject', [PengajuanController::class, 'reject'])->name('pengajuan.reject');
+    Route::get('/fakultas/pengajuan', [PengajuanFakultasController::class, 'index'])->name('fakultas.pengajuan.index');
+    Route::post('/fakultas/pengajuan/{id_user}/{id_beasiswa}/{id_periode}/approve', [PengajuanFakultasController::class, 'approve'])->name('fakultas.pengajuan.approve');
+    Route::post('/fakultas/pengajuan/{id_user}/{id_beasiswa}/{id_periode}/reject', [PengajuanFakultasController::class, 'reject'])->name('fakultas.pengajuan.reject');
 });
 
 Route::middleware(['auth', 'role:mahasiswa'])->group(function (){
@@ -44,8 +47,11 @@ Route::middleware(['auth', 'role:mahasiswa'])->group(function (){
 Route::middleware(['auth', 'role:prodi'])->group(function (){
     // Route::resource('prodi', ProdiController::class);
     Route::get('/prodi/dashboard', [ProdiController::class, 'dashboard'])->name('prodi.dashboard');
-    Route::post('pengajuan/{id}/approve', [PengajuanController::class, 'approve'])->name('pengajuan.approve');
-    Route::post('pengajuan/{id}/reject', [PengajuanController::class, 'reject'])->name('pengajuan.reject');
+    Route::get('/prodi/pengajuan', [PengajuanProdiController::class, 'index'])->name('prodi.pengajuan.index');
+    Route::get('/prodi/pengajuan/{periode_id}/select-beasiswa', [PengajuanProdiController::class, 'selectBeasiswa'])->name('prodi.pengajuan.select-beasiswa');
+    Route::get('/prodi/pengajuan/{periode_id}/{beasiswa_id}/show', [PengajuanProdiController::class, 'showPengajuan'])->name('prodi.pengajuan.show');
+    Route::post('/prodi/pengajuan/{id_user}/{id_beasiswa}/{id_periode}/approve', [PengajuanProdiController::class, 'approve'])->name('prodi.pengajuan.approve');
+    Route::post('/prodi/pengajuan/{id_user}/{id_beasiswa}/{id_periode}/reject', [PengajuanProdiController::class, 'reject'])->name('prodi.pengajuan.reject');
 });
 
 // Role-based dashboard routes

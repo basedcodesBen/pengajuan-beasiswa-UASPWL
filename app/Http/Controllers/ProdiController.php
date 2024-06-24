@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Prodi;
 use App\Models\Fakultas;
+use App\Models\Pengajuan;
+use App\Models\Periode;
+use App\Models\Beasiswa;
 use Illuminate\Http\Request;
 
 class ProdiController extends Controller
