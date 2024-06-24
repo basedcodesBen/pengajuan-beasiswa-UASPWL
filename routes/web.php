@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\AuthController;
 
 /*
@@ -28,13 +29,18 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/settings', [AdminController::class, 'settings'])->name('admin.settings');
 });
 
-Route::middleware(['auth', 'role:admin'])->group(function (){
-
+Route::middleware(['auth', 'role:mahasiswa'])->group(function (){
+    Route::get('/mahasiswa/dashboard',[MahasiswaController::class, 'welcome'])->name('mahasiswa.dashboard');
+    Route::get('/mahasiswa/daftar-beasiswa',[MahasiswaController::class,'beasiswa'])->name('mahasiswa.beasiswa');
+    Route::get('/mahasiswa/pengajuan/{id_beasiswa}',[MahasiswaController::class ,'validateInput']) ->name('pengajuan');
+    Route::get('/mahasiswa/pengajuan-beasiswa/{id_beasiswa}',[MahasiswaController::class,'pengajuan'])->name('pengajuan.beasiswa');
+    Route::post('/mahasiswa/input-pengajuan' , [MahasiswaController::class , 'store']) -> name('input.pengajuan');
+    Route::get('/mahasiwa/edit-pengajuan-beasiswa/{id_beasiswa}', [MahasiswaController::class ,'validatePengajuan'])->name('edit.pengajuan.beasiswa');
+    Route::get('/mahasiswa/edit-pengajuan-beasiswa/{id_beasiswa}',[MahasiswaController::class,'editPengajuan'])->name('edit.pengajuan');
+    Route::put('mahasiswa/edit-pengajuan',[MahasiswaController::class,'update'])->name('update.pengajuan');
+    Route::get('/mahasiswa/delete-pengajuan/{id_beasiswa}', [MahasiswaController::class, 'VerifyDestroy'])->name('delete.pengajuan.beasiswa');
+    Route::delete('/mahasiswa/delete-pengajuan-beasiswa/{id_beasiswa}', [MahasiswaController::class ,'destroy'])->name('delete.pengajuan');
 });
-Route::middleware(['auth', 'role:user'])->get('/user/dashboard', function () {
-    return view('user.dashboard');
-})->name('user.dashboard');
-
 
 // Route::get('/', function () {
 //     return view('pages/login/login-page');

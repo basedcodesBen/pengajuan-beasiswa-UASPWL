@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('periode_beasiswa', function (Blueprint $table) {
-            $table->id('id_periode');
+        Schema::create('pengajuan_doc', function (Blueprint $table) {
+            $table->id('pengajuan_doc_id');
+            $table->unsignedBigInteger('id_user');
+            $table->unsignedBigInteger('id_periode');
             $table->unsignedBigInteger('id_beasiswa');
-            $table->foreign('id_beasiswa')->references('id_beasiswa')->on('beasiswa');
-            $table->year('tahun_ajaran');
-            $table->string('triwulan');
-            $table->date('start_date');
-            $table->date('end_date');
+            $table->string('dkbs');
+            $table->string('surat_rekom');
+            $table->string('surat_pernyataan');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('periode_beasiswa');
+        Schema::dropIfExists('jns_doc');
     }
 };

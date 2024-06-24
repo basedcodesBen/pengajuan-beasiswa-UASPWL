@@ -12,23 +12,22 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('pengajuan', function (Blueprint $table) {
-            $table->id('id_pengajuan');
             $table->unsignedBigInteger('id_user');
-            $table->foreign('id_user')->references('id')->on('users');
             $table->unsignedBigInteger('id_beasiswa');
-            $table->foreign('id_beasiswa')->references('id_beasiswa')->on('beasiswa');
             $table->unsignedBigInteger('id_periode');
-            $table->foreign('id_periode')->references('id_periode')->on('periode_beasiswa');
-            $table->string('nrp');
-            $table->string('nama');
             $table->string('ipk');
-            $table->string('transkrip');
-            $table->string('surat_rekom');
-            $table->string('surat_pernyataan');
-            $table->string('bukti_keaktifan');
-            $table->string('dokum_pendukung');
-            $table->string('status_approve');
+            $table->integer('poin_portofolio');
+            $table->boolean('status_1');
+            $table->boolean('status_2');
             $table->timestamps();
+
+            // Define composite primary key
+            $table->primary(['id_user', 'id_beasiswa', 'id_periode']);
+
+            // Define foreign keys
+            $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('id_beasiswa')->references('id_beasiswa')->on('beasiswa')->onDelete('cascade');
+            $table->foreign('id_periode')->references('id_periode')->on('periode_beasiswa')->onDelete('cascade');
         });
     }
 
