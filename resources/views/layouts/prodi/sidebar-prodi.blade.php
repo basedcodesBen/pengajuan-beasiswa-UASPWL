@@ -58,7 +58,7 @@
                     </svg>
                     <span class="flex-1 ms-3 whitespace-nowrap">Beasiswa</span>
                 </a>
-            </li>
+            </li> --}}
             <li>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
@@ -69,7 +69,7 @@
                         <span class="flex-1 ms-3 whitespace-nowrap">Logout</span>
                     </button>
                 </form>
-            </li> --}}
+            </li>
         </ul>
     </div>
 </aside>

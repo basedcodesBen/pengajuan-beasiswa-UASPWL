@@ -74,6 +74,6 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 });
 
 
-Route::middleware(['auth', 'role:mahasiswa'])->get('/user/dashboard', function () {
-    return view('user.mahasiswa');
-})->name('user.dashboard');
+// Route::middleware(['auth', 'role:mahasiswa'])->get('/user/dashboard', function () {
+//     return view('user.mahasiswa');
+// })->name('user.dashboard');

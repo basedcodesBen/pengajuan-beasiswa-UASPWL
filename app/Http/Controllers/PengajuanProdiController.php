@@ -34,13 +34,12 @@ class PengajuanProdiController extends Controller
 
     public function approve($id_user, $id_beasiswa, $id_periode)
     {
-        // Find the submission and approve it
         $pengajuan = Pengajuan::where('id_user', $id_user)
                               ->where('id_beasiswa', $id_beasiswa)
                               ->where('id_periode', $id_periode)
                               ->firstOrFail();
 
-        $pengajuan->status_1 = true; // Approved by prodi
+        $pengajuan->status_1 = true; // Set status to approved
         $pengajuan->save();
 
         return redirect()->back()->with('success', 'Submission approved successfully.');
@@ -48,13 +47,12 @@ class PengajuanProdiController extends Controller
 
     public function reject($id_user, $id_beasiswa, $id_periode)
     {
-        // Find the submission and reject it
         $pengajuan = Pengajuan::where('id_user', $id_user)
                               ->where('id_beasiswa', $id_beasiswa)
                               ->where('id_periode', $id_periode)
                               ->firstOrFail();
 
-        $pengajuan->status_1 = false; // Rejected by prodi
+        $pengajuan->status_1 = false; // Set status to rejected
         $pengajuan->save();
 
         return redirect()->back()->with('success', 'Submission rejected successfully.');

@@ -27,6 +27,7 @@
                             <a href="#" class="text-blue-500 hover:underline">View Documents</a>
                         </td>
                         <td class="py-2 px-4">
+                            {{-- {{ dd($pengajuan->status_1) }} --}}
                             @if (is_null($pengajuan->status_1))
                                 <form method="POST" action="{{ route('prodi.pengajuan.approve', [$pengajuan->id_user, $pengajuan->id_beasiswa, $pengajuan->id_periode]) }}" class="inline-block">
                                     @csrf
