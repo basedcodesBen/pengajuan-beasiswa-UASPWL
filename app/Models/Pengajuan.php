@@ -9,7 +9,7 @@ Use Illuminate\Database\Eloquent\Builder;
 class Pengajuan extends Model
 {
     use HasFactory;
-
+  
     protected $table = 'pengajuan';
     protected $primaryKey = ['id_user', 'id_beasiswa', 'id_periode'];
     public $incrementing = false;
@@ -24,6 +24,7 @@ class Pengajuan extends Model
         'status_1',
         'status_2',
     ];
+
 
     protected function setKeysForSaveQuery($query)
     {

@@ -19,4 +19,5 @@ class Beasiswa extends Model
     {
         return $this->belongsTo(PeriodeBeasiswa::class, 'id_periode');
     }
+
 }

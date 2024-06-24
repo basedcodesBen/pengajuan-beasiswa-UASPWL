@@ -12,8 +12,8 @@
         <div class="flex flex-col lg:flex-row shadow-lg rounded-lg bg-white max-w-5xl">
             <!-- Left side: Login form -->
             <div class="flex flex-col justify-center items-center w-full lg:w-1/2 p-8">
+                <img class="w-8 h-8 mr-2" src="{{ asset('images/logo.png') }}" alt="logo">
                 <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900">
-                    <img class="w-8 h-8 mr-2" src="{{ asset('images/logo.png') }}" alt="logo">
                     Pengajuan Beasiswa
                 </a>
                 <div class="w-full max-w-md">
