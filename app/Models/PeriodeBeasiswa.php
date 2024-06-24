@@ -14,7 +14,12 @@ class PeriodeBeasiswa extends Model
     protected $fillable = [
         'id_periode',
         'id_beasiswa',
-        'periode'
+        'tahun_ajaran',
+        'triwulan',
+        'start_date',
+        'end_date',
+        'created_at',
+        'updated_at',
     ];
 
     protected $primaryKey = 'id_beasiswa';

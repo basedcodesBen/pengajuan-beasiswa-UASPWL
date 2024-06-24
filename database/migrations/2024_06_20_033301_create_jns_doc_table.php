@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('pengajuan_doc', function (Blueprint $table) {
             $table->id('pengajuan_doc_id');
+            $table->unsignedBigInteger('id_user');
+            $table->unsignedBigInteger('id_periode');
+            $table->unsignedBigInteger('id_beasiswa');
             $table->string('dkbs');
             $table->string('surat_rekom');
             $table->string('surat_pernyataan');
