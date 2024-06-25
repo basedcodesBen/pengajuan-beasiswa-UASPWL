@@ -19,7 +19,7 @@ class MahasiswaController extends Controller
     {
         $User = Auth::user();
 
-        $file_path = PengajuanDoc::all();
+        // $file_path = PengajuanDoc::all();
 
         return view('pages.user.index-user', compact('User','file_path'));
     }
