@@ -15,24 +15,38 @@
             </div>
         @endif
 
-        <form action="{{ route('periode.update', $periode->id_periode) }}" method="POST">
+        <form action="{{ route('periode.update', ['tahun_ajaran' => $tahun_ajaran, 'triwulan' => $triwulan]) }}" method="POST">
             @csrf
             @method('PUT')
             <div class="mb-4">
-                <label for="nama_periode" class="block text-gray-700">Nama Periode:</label>
-                <input type="text" name="nama_periode" id="nama_periode" class="w-full p-2 border border-gray-300 rounded" value="{{ old('nama_periode', $periode->nama_periode) }}">
+                <label for="tahun_ajaran" class="block text-gray-700">Tahun Ajaran:</label>
+                <input type="number" name="tahun_ajaran" id="tahun_ajaran" class="w-full p-2 border border-gray-300 rounded" value="{{ $tahun_ajaran }}" disabled>
             </div>
             <div class="mb-4">
-                <label for="tanggal_mulai" class="block text-gray-700">Tanggal Mulai:</label>
-                <input type="date" name="tanggal_mulai" id="tanggal_mulai" class="w-full p-2 border border-gray-300 rounded" value="{{ old('tanggal_mulai', $periode->tanggal_mulai) }}">
+                <label for="triwulan" class="block text-gray-700">Triwulan:</label>
+                <input type="text" name="triwulan" id="triwulan" class="w-full p-2 border border-gray-300 rounded" value="{{ $triwulan }}" disabled>
             </div>
             <div class="mb-4">
-                <label for="tanggal_selesai" class="block text-gray-700">Tanggal Selesai:</label>
-                <input type="date" name="tanggal_selesai" id="tanggal_selesai" class="w-full p-2 border border-gray-300 rounded" value="{{ old('tanggal_selesai', $periode->tanggal_selesai) }}">
+                <label for="start_date" class="block text-gray-700">Start Date:</label>
+                <input type="date" name="start_date" id="start_date" class="w-full p-2 border border-gray-300 rounded" value="{{ $periodes->first()->start_date }}">
+            </div>
+            <div class="mb-4">
+                <label for="end_date" class="block text-gray-700">End Date:</label>
+                <input type="date" name="end_date" id="end_date" class="w-full p-2 border border-gray-300 rounded" value="{{ $periodes->first()->end_date }}">
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700">Beasiswa:</label>
+                @foreach($beasiswas as $beasiswa)
+                    <div>
+                        <input type="checkbox" name="beasiswas[]" value="{{ $beasiswa->id_beasiswa }}" id="beasiswa_{{ $beasiswa->id_beasiswa }}"
+                        @if(in_array($beasiswa->id_beasiswa, $selectedBeasiswas)) checked @endif>
+                        <label for="beasiswa_{{ $beasiswa->id_beasiswa }}">{{ $beasiswa->jenis_beasiswa }}</label>
+                    </div>
+                @endforeach
             </div>
             <div>
                 <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Update</button>
-                <a href="{{ route('periode.index') }}" class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600">Cancel</a>
+                <a href="{{ route('fakultas.periode.index') }}" class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600">Cancel</a>
             </div>
         </form>
     </div>

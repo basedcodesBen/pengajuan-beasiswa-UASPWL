@@ -10,6 +10,7 @@ use App\Http\Controllers\FakultasController;
 use App\Http\Controllers\PengajuanProdiController;
 use App\Http\Controllers\PengajuanFakultasController;
 use App\Http\Controllers\PeriodeBeasiswaController;
+use App\Http\Controllers\BeasiswaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,7 +29,13 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 // Route::get('/prodi/dashboard', [ProdiController::class, 'dashboard'])->name('prodi.dashboard');
 
 Route::middleware(['auth', 'role:fakultas'])->group(function(){
-    Route::resource('fakultas/periode', PeriodeBeasiswaController::class);
+    Route::get('fakultas/dashboard', [FakultasController::class, 'dashboard'])->name('fakultas.dashboard');
+    Route::get('/fakultas/periode', [PeriodeBeasiswaController::class, 'index'])->name('fakultas.periode.index');
+    Route::get('/fakultas/periode/create', [PeriodeBeasiswaController::class, 'create'])->name('periode.create');
+    Route::post('/fakultas/periode', [PeriodeBeasiswaController::class, 'store'])->name('periode.store');
+    Route::get('/fakultas/periode/{tahun_ajaran}/{triwulan}/edit', [PeriodeBeasiswaController::class, 'edit'])->name('periode.edit');
+    Route::put('/fakultas/periode/{tahun_ajaran}/{triwulan}', [PeriodeBeasiswaController::class, 'update'])->name('periode.update');
+    Route::delete('/fakultas/periode/{tahun_ajaran}/{triwulan}', [PeriodeBeasiswaController::class, 'destroy'])->name('periode.destroy');
     Route::get('/fakultas/pengajuan', [PengajuanFakultasController::class, 'index'])->name('fakultas.pengajuan.index');
     Route::post('/fakultas/pengajuan/{id_user}/{id_beasiswa}/{id_periode}/approve', [PengajuanFakultasController::class, 'approve'])->name('fakultas.pengajuan.approve');
     Route::post('/fakultas/pengajuan/{id_user}/{id_beasiswa}/{id_periode}/reject', [PengajuanFakultasController::class, 'reject'])->name('fakultas.pengajuan.reject');
@@ -69,6 +76,9 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/users/{user}/edit', [AdminController::class, 'edit'])->name('admin.users.edit');
     Route::put('/admin/users/{user}', [AdminController::class, 'update'])->name('admin.users.update');
     Route::delete('/admin/users/{user}', [AdminController::class, 'destroy'])->name('admin.users.destroy');
+
+    // CRUD for Beasiswa
+    Route::resource('admin/beasiswa', BeasiswaController::class);
 
     // CRUD for Fakultas
     Route::resource('fakultas', FakultasController::class);

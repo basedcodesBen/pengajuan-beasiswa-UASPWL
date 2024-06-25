@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class FakultasController extends Controller
 {
+    public function dashboard()
+    {
+        return view('pages.fakultas.index-fakultas');
+    }
+    
     public function index()
     {
         $fakultas = Fakultas::all();

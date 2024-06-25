@@ -12,7 +12,7 @@
 </head>
 <body class="bg-gray-100">
     <div class="wrapper">
-        @include('layouts.admin.sidebar-admin')
+        @include('layouts.fakultas.sidebar-fakultas')
 
         <div class="content-wrapper">
             @yield('web-content')
