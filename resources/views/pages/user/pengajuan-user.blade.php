@@ -1,7 +1,12 @@
 @extends('../layouts/user/master-user')
 
 <div class="min-h-screen flex flex-col items-center">
-    <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-4xl mt-10">
+    @if(session('error'))
+        <div class="alert text-red-700 text-xl mt-5">
+            {{ session('error') }}
+        </div>
+    @endif
+    <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-4xl mt-5">
 
         <div class="overflow-x-auto">
             @foreach($beasiswas as $beasiswa)
@@ -38,11 +43,20 @@
                     <div class="mb-4">
                         <input type="hidden" name="id_beasiswa" id="id_beasiswa" value="{{$beasiswa->id_beasiswa}}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                     </div>
-
-                    <div class="flex items-center justify-end mt-4">
-                        <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                            Save
-                        </button>
+                    <div class="flex justify-between ">
+                        <div class="text-left mr-10">
+                            <p>
+                                Note :
+                            </p>
+                            <p>* File harus PDF</p>
+                            <p>* Tidak boleh ada form yang kosong </p>
+                        </div>
+                        <div class="  items-center mt-4 ">
+                            <a href="{{Route('mahasiswa.beasiswa')}}" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 mr-5"> Back </a>
+                            <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                Save
+                            </button>
+                        </div>
                     </div>
                 </form>
             @endforeach

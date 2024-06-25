@@ -45,7 +45,7 @@ class MahasiswaController extends Controller
             ->exists();
 
         if ($exists){
-            return redirect()->route('mahasiswa.beasiswa');
+            return redirect()->route('mahasiswa.beasiswa')->with('error', 'Pengajuan hanya dapat dilakukan satu kali!');
         }else{
             return redirect()->route('pengajuan.beasiswa',[$id_beasiswa]);
         }
@@ -66,6 +66,7 @@ class MahasiswaController extends Controller
             'surat_rekom' => 'required|file|mimes:pdf,doc,docx,png', // Example file validation
             'surat_pernyataan' => 'required|file|mimes:pdf,doc,docx,png', // Example file validation
         ]);
+        
 //
         $periode = PeriodeBeasiswa::where('id_beasiswa', $request->id_beasiswa)
             ->value('id_periode');
@@ -91,8 +92,8 @@ class MahasiswaController extends Controller
         $pengajuan->id_periode = $periode;
         $pengajuan->ipk = $request->ipk;
         $pengajuan->poin_portofolio = $request->poinporto;
-        $pengajuan->status_1 = NULL;
-        $pengajuan->status_2 = NULL;
+        $pengajuan->status_1 = False;
+        $pengajuan->status_2 = False;
         $pengajuan->save();
 
         $pengajuan_doc = new PengajuanDoc();
@@ -120,7 +121,7 @@ class MahasiswaController extends Controller
         if ($exists){
             return redirect()->route('edit.pengajuan',[$id_beasiswa]);
         }else{
-            return redirect()->route('mahasiswa.beasiswa');
+            return redirect()->route('mahasiswa.beasiswa')->with('error', 'Data tidak ditemukan!');
         }
     }
     public function editPengajuan($id_beasiswa){
@@ -237,7 +238,7 @@ class MahasiswaController extends Controller
 
             return redirect()->route('mahasiswa.beasiswa');
         }else{
-            return redirect()->route('mahasiswa.beasiswa');
+            return redirect()->route('mahasiswa.beasiswa')->with('error', 'Data tidak ditemukan!');
         }
 
     }
