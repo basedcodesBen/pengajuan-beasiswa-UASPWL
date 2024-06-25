@@ -91,8 +91,8 @@ class MahasiswaController extends Controller
         $pengajuan->id_periode = $periode;
         $pengajuan->ipk = $request->ipk;
         $pengajuan->poin_portofolio = $request->poinporto;
-        $pengajuan->status_1 = False;
-        $pengajuan->status_2 = False;
+        $pengajuan->status_1 = NULL;
+        $pengajuan->status_2 = NULL;
         $pengajuan->save();
 
         $pengajuan_doc = new PengajuanDoc();
@@ -138,7 +138,7 @@ class MahasiswaController extends Controller
     {
         $request->validate([
             'id_beasiswa' => 'required|integer',
-            'ipk' => 'nullable|integer',
+            'ipk' => 'nullable|string',
             'poinporto' => 'nullable|integer',
             'dkbs' => 'nullable|file|mimes:pdf,doc,docx,png',
             'surat_rekom' => 'nullable|file|mimes:pdf,doc,docx,png',
@@ -156,19 +156,19 @@ class MahasiswaController extends Controller
             ->where('id_user', $id_user)
             ->first();
 
-        if ($request->has('ipk')) {
+        if ($request->ipk != null) {
             $pengajuan->ipk = $request->ipk;
         }
 
-        if ($request->has('poinporto')) {
-            $pengajuan->poin_portofolio = $request->poinporto;
+        if ($request-> poinporto != null) {
+           $pengajuan->poin_portofolio = $request->poinporto;
         }
 
         // Save changes only if there are updates
-        if ($request->has('ipk') || $request->has('poinporto')) {
+        if ($request->ipk != null || $request->ipk != null) {
             $pengajuan->update();
         }
-
+        if ($request->has('dkbs') || $request->has('surat_rekom') || $request->has('surat_pernyataan')) {
         $pengajuan_doc = PengajuanDoc::where('id_beasiswa', '=', $request->id_beasiswa)
             ->where('id_periode', $periode)
             ->where('id_user', $id_user)
@@ -176,33 +176,36 @@ class MahasiswaController extends Controller
 
         $dkbspath = pathinfo($pengajuan_doc->dkbs);
         $folderName = $dkbspath['dirname'];
-        $dkbs = $request->file('dkbs')->getClientOriginalName(); // Or use a different naming convention
-        $suratrekom = $request->file('surat_rekom')->getClientOriginalName();
-        $suratpernyataan = $request->file('surat_pernyataan')->getClientOriginalName();
+         // Or use a different naming convention
+    
+        
 
         //Handle file uploads
-        if ($request->hasFile('dkbs')) {
+        if ($request->dkbs != null) {
             if ($pengajuan_doc->dkbs) {
+                $dkbs = $request->file('dkbs')->getClientOriginalName();
                 Storage::disk('public')->delete($pengajuan_doc->dkbs);
             }
             $pengajuan_doc->dkbs = $request->file('dkbs')->storeAs($folderName, $dkbs, 'public');
         }
 
-        if ($request->hasFile('surat_rekom')) {
+        if ($request->surat_rekom != null) {
             if ($pengajuan_doc->surat_rekom) {
+                $suratrekom = $request->file('surat_rekom')->getClientOriginalName();
                 Storage::disk('public')->delete($pengajuan_doc->surat_rekom);
             }
             $pengajuan_doc->surat_rekom = $request->file('surat_rekom')->storeAs($folderName, $suratrekom, 'public');
         }
 
-        if ($request->hasFile('surat_pernyataan')) {
+        if ($request->surat_pernyataan != null) {
             if ($pengajuan_doc->surat_pernyataan) {
+                $suratpernyataan = $request->file('surat_pernyataan')->getClientOriginalName();
                 Storage::disk('public')->delete($pengajuan_doc->surat_pernyataan);
             }
             $pengajuan_doc->surat_pernyataan = $request->file('surat_pernyataan')->storeAs($folderName, $suratpernyataan, 'public');
         }
 
-        if ($request->has('dkbs') || $request->has('surat_rekom') || $request->has('surat_pernyataan')) {
+        
             $pengajuan_doc->update();
         }
         return redirect()->route('mahasiswa.beasiswa');

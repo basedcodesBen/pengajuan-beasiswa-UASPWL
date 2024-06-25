@@ -4,17 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-Use Illuminate\Database\Eloquent\Builder;
 use Exception;
 
 class Pengajuan extends Model
 {
     use HasFactory;
-  
+
     protected $table = 'pengajuan';
     protected $primaryKey = ['id_user', 'id_beasiswa', 'id_periode'];
     public $incrementing = false;
-    protected $keyType = 'string';
+    protected $keyType = 'int'; // Use 'int' or 'string' based on your keys' actual data types
 
     protected $fillable = [
         'id_user',
@@ -26,33 +25,50 @@ class Pengajuan extends Model
         'status_2',
     ];
 
-
     /**
      * Override the method to set the keys for the save query.
      *
-     * @param Builder $query
-     * @return Builder
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
      */
     protected function setKeysForSaveQuery($query)
     {
-        foreach ((array) $this->primaryKey as $pk) {
-            $value = $this->getAttribute($pk);
-
-            if ($value !== null) {
-                $query->where($pk, '=', $value);
-            } else {
-                throw new Exception(__METHOD__ . ' - Missing part of the primary key: ' . $pk);
-            }
+        foreach ($this->primaryKey as $pk) {
+            $query->where($pk, '=', $this->getAttribute($pk));
         }
 
         return $query;
     }
 
-    public function pengajuanDocs()
+    /**
+     * Override the method to return the composite key name.
+     *
+     * @return array
+     */
+    public function getKeyName()
     {
-        return $this->belongsToMany(PengajuanDoc::class, 'pengajuan_pengajuan_doc', 'id_user', 'pengajuan_doc_id')
-            ->withPivot('file_path', 'id_beasiswa', 'id_periode');
+        return $this->primaryKey;
     }
+
+    /**
+     * Override the method to get the key for the save query.
+     *
+     * @return array
+     */
+    protected function getKeyForSaveQuery()
+    {
+        $keys = [];
+        foreach ($this->primaryKey as $pk) {
+            $keys[$pk] = $this->getAttribute($pk);
+        }
+        return $keys;
+    }
+
+    // public function pengajuanDocs()
+    // {
+    //     return $this->belongsToMany(PengajuanDoc::class, 'pengajuan_pengajuan_doc', 'id_user', 'pengajuan_doc_id')
+    //         ->withPivot('file_path', 'id_beasiswa', 'id_periode');
+    // }
 
     public function user()
     {
@@ -69,3 +85,4 @@ class Pengajuan extends Model
         return $this->belongsTo(PeriodeBeasiswa::class, 'id_periode');
     }
 }
+

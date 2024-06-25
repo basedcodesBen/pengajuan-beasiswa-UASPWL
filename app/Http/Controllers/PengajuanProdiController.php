@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Pengajuan;
 use App\Models\PeriodeBeasiswa;
 use App\Models\Beasiswa;
+use App\Models\PengajuanDoc;
 
 class PengajuanProdiController extends Controller
 {
@@ -30,6 +31,17 @@ class PengajuanProdiController extends Controller
                                 ->where('id_beasiswa', $beasiswa_id)
                                 ->get();
         return view('pages.prodi.pengajuan.show-pengajuan-prodi', compact('pengajuans', 'periode_id', 'beasiswa_id'));
+    }
+
+    public function viewDocuments($id_user, $id_beasiswa, $id_periode)
+    {
+        $periode = PeriodeBeasiswa::where('id_beasiswa','=',$id_beasiswa)->value('id_periode');
+        $pengajuan = PengajuanDoc::where('id_beasiswa','=',$id_beasiswa)
+            -> where('id_periode',$periode)
+            -> where('id_user', $id_user)
+            -> get();
+
+        return view('pages.prodi.pengajuan.docs-pengajuan-prodi', compact('pengajuan'));
     }
 
     public function approve($id_user, $id_beasiswa, $id_periode)
