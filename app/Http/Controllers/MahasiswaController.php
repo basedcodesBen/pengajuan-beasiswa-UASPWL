@@ -21,7 +21,7 @@ class MahasiswaController extends Controller
 
         // $file_path = PengajuanDoc::all();
 
-        return view('pages.user.index-user', compact('User','file_path'));
+        return view('pages.user.index-user', compact('User'));
     }
 
     public function beasiswa()
@@ -45,7 +45,7 @@ class MahasiswaController extends Controller
             ->exists();
 
         if ($exists){
-            return redirect()->route('mahasiswa.beasiswa');
+            return redirect()->route('mahasiswa.beasiswa')->with('error', 'Pengajuan hanya dapat dilakukan satu kali!');
         }else{
             return redirect()->route('pengajuan.beasiswa',[$id_beasiswa]);
         }
@@ -66,47 +66,51 @@ class MahasiswaController extends Controller
             'surat_rekom' => 'required|file|mimes:pdf,doc,docx,png', // Example file validation
             'surat_pernyataan' => 'required|file|mimes:pdf,doc,docx,png', // Example file validation
         ]);
+        if ($request->isValid()){
 //
-        $periode = PeriodeBeasiswa::where('id_beasiswa', $request->id_beasiswa)
-            ->value('id_periode');
+            $periode = PeriodeBeasiswa::where('id_beasiswa', $request->id_beasiswa)
+                ->value('id_periode');
 
-        $User = Auth::user();
-        $name = $User -> nrp;
-        $id_user = $User -> id;
-        $date = Carbon::now()->toDateString();
-        $dirname = $name.'_'.$date;
-        Storage::disk('public')->makeDirectory($dirname);
+            $User = Auth::user();
+            $name = $User -> nrp;
+            $id_user = $User -> id;
+            $date = Carbon::now()->toDateString();
+            $dirname = $name.'_'.$date;
+            Storage::disk('public')->makeDirectory($dirname);
 
-        $dkbs = $request->file('dkbs');
-        $suratrekom = $request->file('surat_rekom');
-        $suratpernyataan = $request->file('surat_pernyataan');
+            $dkbs = $request->file('dkbs');
+            $suratrekom = $request->file('surat_rekom');
+            $suratpernyataan = $request->file('surat_pernyataan');
 
-        $dkbsPath = $dkbs->storeAs($dirname, $dkbs->getClientOriginalName() , 'public');
-        $suratRekomPath = $suratrekom->storeAs($dirname,$suratrekom->getClientOriginalName(),'public');
-        $suratPernyataanPath = $suratpernyataan->storeAs($dirname,$suratpernyataan->getClientOriginalName() ,'public');
-//
-        $pengajuan = new Pengajuan();
-        $pengajuan->id_user = $id_user;
-        $pengajuan->id_beasiswa = $request->id_beasiswa;
-        $pengajuan->id_periode = $periode;
-        $pengajuan->ipk = $request->ipk;
-        $pengajuan->poin_portofolio = $request->poinporto;
-        $pengajuan->status_1 = NULL;
-        $pengajuan->status_2 = NULL;
-        $pengajuan->save();
+            $dkbsPath = $dkbs->storeAs($dirname, $dkbs->getClientOriginalName() , 'public');
+            $suratRekomPath = $suratrekom->storeAs($dirname,$suratrekom->getClientOriginalName(),'public');
+            $suratPernyataanPath = $suratpernyataan->storeAs($dirname,$suratpernyataan->getClientOriginalName() ,'public');
+    //
+            $pengajuan = new Pengajuan();
+            $pengajuan->id_user = $id_user;
+            $pengajuan->id_beasiswa = $request->id_beasiswa;
+            $pengajuan->id_periode = $periode;
+            $pengajuan->ipk = $request->ipk;
+            $pengajuan->poin_portofolio = $request->poinporto;
+            $pengajuan->status_1 = False;
+            $pengajuan->status_2 = False;
+            $pengajuan->save();
 
-        $pengajuan_doc = new PengajuanDoc();
-        $pengajuan_doc->id_user = $id_user;
-        $pengajuan_doc->id_beasiswa = $request->id_beasiswa;
-        $pengajuan_doc->id_periode = $periode;
-        $pengajuan_doc->dkbs = $dkbsPath;
-        $pengajuan_doc->surat_rekom = $suratRekomPath;
-        $pengajuan_doc->surat_pernyataan = $suratPernyataanPath;
-        $pengajuan_doc->save();
+            $pengajuan_doc = new PengajuanDoc();
+            $pengajuan_doc->id_user = $id_user;
+            $pengajuan_doc->id_beasiswa = $request->id_beasiswa;
+            $pengajuan_doc->id_periode = $periode;
+            $pengajuan_doc->dkbs = $dkbsPath;
+            $pengajuan_doc->surat_rekom = $suratRekomPath;
+            $pengajuan_doc->surat_pernyataan = $suratPernyataanPath;
+            $pengajuan_doc->save();
 
 
 
-        return redirect()->route('mahasiswa.beasiswa');
+            return redirect()->route('mahasiswa.beasiswa');
+        }else{
+             return back()->with('error', 'There was an issue with the file upload.');
+        }
     }
     public function validatePengajuan($id_beasiswa){
         $User = Auth::user();
@@ -120,7 +124,7 @@ class MahasiswaController extends Controller
         if ($exists){
             return redirect()->route('edit.pengajuan',[$id_beasiswa]);
         }else{
-            return redirect()->route('mahasiswa.beasiswa');
+            return redirect()->route('mahasiswa.beasiswa')->with('error', 'Data tidak ditemukan!');
         }
     }
     public function editPengajuan($id_beasiswa){
@@ -237,7 +241,7 @@ class MahasiswaController extends Controller
 
             return redirect()->route('mahasiswa.beasiswa');
         }else{
-            return redirect()->route('mahasiswa.beasiswa');
+            return redirect()->route('mahasiswa.beasiswa')->with('error', 'Data tidak ditemukan!');
         }
 
     }

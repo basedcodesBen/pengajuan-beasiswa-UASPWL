@@ -25,7 +25,7 @@
                         <label for="dkbs" class="block text-sm font-medium text-gray-700">DKBS</label>
                         <input type="file" name="dkbs" id="dkbs" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                         @if ($pengajuans->dkbs)
-                            <p>Current file: <a href="{{ asset('storage/' . $pengajuans->dkbs) }}" target="_blank">View DKBS File</a></p>
+                            <p>File Terkini: <a href="{{ asset('storage/' . $pengajuans->dkbs) }}" target="_blank" class="text-blue-500 hover:text-blue-700">View DKBS File</a></p>
                         @endif
                     </div>
 
@@ -33,7 +33,7 @@
                         <label for="surat_rekom" class="block text-sm font-medium text-gray-700">Surat Rekomendasi</label>
                         <input type="file" name="surat_rekom" id="surat_rekom" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                         @if ($pengajuans->surat_rekom)
-                            <p>Current file: <a href="{{ asset('storage/' . $pengajuans->surat_rekom) }}" target="_blank">View Surat Rekomendasi File</a></p>
+                            <p>File Terkini: <a href="{{ asset('storage/'.$pengajuans->surat_rekom) }}" target="_blank" class="text-blue-500 hover:text-blue-700">View Surat Rekomendasi File</a></p>
                         @endif
                     </div>
 
@@ -41,7 +41,7 @@
                         <label for="surat_pernyataan" class="block text-sm font-medium text-gray-700">Surat Pernyataan</label>
                         <input type="file" name="surat_pernyataan" id="surat_pernyataan" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                         @if ($pengajuans->surat_pernyataan)
-                            <p>Current file: <a href="{{ asset('storage/' . $pengajuans->surat_pernyataan) }}" target="_blank">View Surat Pernyataan File</a></p>
+                            <p>File Terkini: <a href="{{ asset('storage/' . $pengajuans->surat_pernyataan) }}" target="_blank" class="text-blue-500 hover:text-blue-700">View Surat Pernyataan File</a></p>
                         @endif
                     </div>
 
@@ -49,12 +49,22 @@
                         <input type="hidden" name="id_beasiswa" id="id_beasiswa" value="{{$beasiswa->id_beasiswa}}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                     </div>
 
-                    <div class="flex items-center justify-end mt-4">
-                        <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                            Save
-                        </button>
+                    <div class="flex justify-between ">
+                        <div class="text-left mr-10">
+                            <p>
+                                Note :
+                            </p>
+                            <p>* File harus PDF</p>
+                        </div>
+                        <div class=" items-center mt-4 ">
+                            <a href="{{Route('mahasiswa.beasiswa')}}" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 mr-5"> Back </a>
+                            <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                Save
+                            </button>
+                        </div>
                     </div>
                 </form>
+                
                 @endforeach
             @endforeach
         </div>
