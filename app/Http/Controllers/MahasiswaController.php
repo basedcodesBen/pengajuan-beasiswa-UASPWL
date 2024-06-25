@@ -21,7 +21,7 @@ class MahasiswaController extends Controller
 
         // $file_path = PengajuanDoc::all();
 
-        return view('pages.user.index-user', compact('User','file_path'));
+        return view('pages.user.index-user', compact('User'));
     }
 
     public function beasiswa()

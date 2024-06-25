@@ -8,8 +8,8 @@ use App\Http\Controllers\ProdiController;
 use App\Http\Controllers\PengajuanController;
 use App\Http\Controllers\FakultasController;
 use App\Http\Controllers\PengajuanProdiController;
-use App\Http\Controllers\PengajuanFakultasController;
 use App\Http\Controllers\PeriodeBeasiswaController;
+use App\Http\Controllers\FakultasPengajuanController;
 use App\Http\Controllers\BeasiswaController;
 
 /*
@@ -36,10 +36,11 @@ Route::middleware(['auth', 'role:fakultas'])->group(function(){
     Route::get('/fakultas/periode/{tahun_ajaran}/{triwulan}/edit', [PeriodeBeasiswaController::class, 'edit'])->name('periode.edit');
     Route::put('/fakultas/periode/{tahun_ajaran}/{triwulan}', [PeriodeBeasiswaController::class, 'update'])->name('periode.update');
     Route::delete('/fakultas/periode/{tahun_ajaran}/{triwulan}', [PeriodeBeasiswaController::class, 'destroy'])->name('periode.destroy');
-    Route::get('/fakultas/pengajuan', [PengajuanFakultasController::class, 'index'])->name('fakultas.pengajuan.index');
-    Route::post('/fakultas/pengajuan/{id_user}/{id_beasiswa}/{id_periode}/approve', [PengajuanFakultasController::class, 'approve'])->name('fakultas.pengajuan.approve');
-    Route::post('/fakultas/pengajuan/{id_user}/{id_beasiswa}/{id_periode}/reject', [PengajuanFakultasController::class, 'reject'])->name('fakultas.pengajuan.reject');
-    Route::get('/fakultas/pengajuan/{id_user}/{id_beasiswa}/{id_periode}/documents', [PengajuanFakultasController::class, 'viewDocuments'])->name('fakultas.pengajuan.documents');
+    Route::get('/fakultas/pengajuan', [FakultasPengajuanController::class, 'index'])->name('fakultas.pengajuan.index');
+    Route::get('/fakultas/pengajuan/{tahun_ajaran}/{triwulan}/{beasiswa_id}', [FakultasPengajuanController::class, 'show'])->name('fakultas.pengajuan.show');
+    Route::post('/fakultas/pengajuan/{id_user}/{id_beasiswa}/{id_periode}/approve', [FakultasPengajuanController::class, 'approve'])->name('fakultas.pengajuan.approve');
+    Route::post('/fakultas/pengajuan/{id_user}/{id_beasiswa}/{id_periode}/reject', [FakultasPengajuanController::class, 'reject'])->name('fakultas.pengajuan.reject');
+    Route::get('/fakultas/pengajuan/documents/{id_user}/{id_beasiswa}/{id_periode}', [FakultasPengajuanController::class, 'viewDocuments'])->name('fakultas.pengajuan.documents');
 });
 
 Route::middleware(['auth', 'role:mahasiswa'])->group(function (){
