@@ -25,7 +25,7 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
-        'Aktif'
+        'Aktif',
         'id_prodi', 
         'id_fakultas',
     ];

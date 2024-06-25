@@ -24,15 +24,15 @@
                         <td class="py-2 px-4">{{ $pengajuan->ipk }}</td>
                         <td class="py-2 px-4">{{ $pengajuan->poin_portofolio }}</td>
                         <td class="py-2 px-4">
-                            <a href="#" class="text-blue-500 hover:underline">View Documents</a>
+                            <a href="{{ route('prodi.pengajuan.documents', ['id_user' => $pengajuan->id_user, 'id_beasiswa' => $pengajuan->id_beasiswa, 'id_periode' => $pengajuan->id_periode]) }}" class="text-blue-500 hover:underline">View Documents</a>
                         </td>
                         <td class="py-2 px-4">
                             @if (is_null($pengajuan->status_1))
-                                <form method="POST" action="{{ route('prodi.pengajuan.approve', [$pengajuan->id_user, $pengajuan->id_beasiswa, $pengajuan->id_periode]) }}" class="inline-block">
+                                <form method="POST" action="{{ route('prodi.pengajuan.approve', ['id_user' => $pengajuan->id_user, 'id_beasiswa' => $pengajuan->id_beasiswa, 'id_periode' => $pengajuan->id_periode]) }}" class="inline-block">
                                     @csrf
                                     <button type="submit" class="px-2 py-1 bg-green-500 text-white rounded hover:bg-green-600">Approve</button>
                                 </form>
-                                <form method="POST" action="{{ route('prodi.pengajuan.reject', [$pengajuan->id_user, $pengajuan->id_beasiswa, $pengajuan->id_periode]) }}" class="inline-block">
+                                <form method="POST" action="{{ route('prodi.pengajuan.reject', ['id_user' => $pengajuan->id_user, 'id_beasiswa' => $pengajuan->id_beasiswa, 'id_periode' => $pengajuan->id_periode]) }}" class="inline-block">
                                     @csrf
                                     <button type="submit" class="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600">Reject</button>
                                 </form>

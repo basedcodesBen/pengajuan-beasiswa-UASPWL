@@ -16,8 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('id_periode');
             $table->string('ipk');
             $table->integer('poin_portofolio');
-            $table->boolean('status_1');
-            $table->boolean('status_2');
+            $table->boolean('status_1')->nullable();
+            $table->boolean('status_2')->nullable();
             $table->timestamps();
 
             // Define composite primary key

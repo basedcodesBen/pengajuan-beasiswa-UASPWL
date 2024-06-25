@@ -14,6 +14,18 @@ class PengajuanFakultasController extends Controller
         return view('fakultas.pengajuan.index', compact('pengajuans'));
     }
 
+    public function viewDocuments($id_user, $id_beasiswa, $id_periode)
+    {
+        $pengajuan = Pengajuan::where('id_user', $id_user)
+                              ->where('id_beasiswa', $id_beasiswa)
+                              ->where('id_periode', $id_periode)
+                              ->firstOrFail();
+
+        $documents = $pengajuan->pengajuanDocs;
+
+        return view('fakultas.pengajuan.documents', compact('pengajuan', 'documents'));
+    }
+
     public function approve($id_user, $id_beasiswa, $id_periode)
     {
         // Find the submission and approve it

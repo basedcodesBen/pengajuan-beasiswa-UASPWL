@@ -38,8 +38,8 @@ class PengajuanController extends Controller
             'id_periode' => 'required',
             'ipk' => 'required|string',
             'poin_portofolio' => 'required|integer',
-            'status_1' => 'required|boolean',
-            'status_2' => 'required|boolean',
+            'status_1' => 'boolean',
+            'status_2' => 'boolean',
             'pengajuan_doc_id' => 'required|array',
             'pengajuan_doc_id.*' => 'exists:pengajuan_doc,pengajuan_doc_id',
             'file_path' => 'required|array',
@@ -47,7 +47,7 @@ class PengajuanController extends Controller
         ]);
 
         $pengajuan = Pengajuan::create($request->only([
-            'id_user', 'id_beasiswa', 'id_periode', 'ipk', 'poin_portofolio', 'status_1', 'status_2'
+            'id_user', 'id_beasiswa', 'id_periode', 'ipk', 'poin_portofolio',
         ]));
 
         foreach ($request->pengajuan_doc_id as $index => $pengajuanDocId) {

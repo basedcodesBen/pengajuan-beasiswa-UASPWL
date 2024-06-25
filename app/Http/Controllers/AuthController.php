@@ -22,15 +22,14 @@ class AuthController extends Controller
             $user = Auth::user();
             if ($user->role == 'admin') {
                 return redirect()->route('admin.dashboard');
-            } elseif ($user->role == 'mahasiswa')
-                return redirect()->route('user.dashboard');
+            } elseif ($user->role == 'mahasiswa') {
+                return redirect()->route('mahasiswa.dashboard');
             } elseif ($user->role == 'prodi') {
                 return redirect()->route('prodi.dashboard');
             } elseif ($user->role == 'fakultas') {
-                return redirect()->route('fakultas.dashboard');
-            }
+                return redirect()->route('fakultas.index');
+            }}
             // Add more role-based redirects if necessary
-        }
 
         return redirect()->back()->withErrors(['login' => 'Invalid credentials or inactive account']);
     }
